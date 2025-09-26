@@ -1,4 +1,4 @@
-naija-rep-frontend/
+Afri-Rep-frontend/
 ├── src/
 │   ├── components/
 │   │   ├── common/
