@@ -1,0 +1,19 @@
+naija-rep-frontend/
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   ├── auth/
+│   │   ├── reputation/
+│   │   ├── circles/
+│   │   └── financial/
+│   ├── screens/
+│   ├── navigation/
+│   ├── store/
+│   ├── services/
+│   ├── utils/
+│   ├── types/
+│   └── assets/
+├── App.tsx
+├── app.json
+├── package.json
+└── tsconfig.json
