@@ -5,12 +5,6 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "./interfaces/IAfriRep.sol";
 
-
-/**
- * @title AfriRep Core Contract
- * @dev Main contract for Afri Rep reputation system
- * Features: User profiles, skill management, cross-border reputation
- */
 contract AfriRep is Initializable, AccessControlUpgradeable, IAfriRep {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant VALIDATOR_ROLE = keccak256("VALIDATOR_ROLE");
