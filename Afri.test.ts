@@ -48,9 +48,14 @@ describe("AfriRep", function () {
 
   it("Should calculate reputation with cross-border adjustments", async function () {
     await afriRep.connect(user1).registerUser("Chinedu", "NGA", "ipfs_hash_123");
+    await afriRep.connect(user2).registerUser("Amina", "KEN", "ipfs_hash_456");
     
+    await afriRep.connect(owner).addSkill("web_dev", "Web Development", "tech");
     
+    // Give multiple vouches
+    await afriRep.connect(user1).giveVouch(user2.address, "web_dev", 5, "Great work!", "evidence1");
     
-    
-   
-    
+    const profile = await afriRep.getUserProfile(user2.address);
+    expect(Number(profile.reputationScore)).to.be.greaterThan(10);
+  });
+});
