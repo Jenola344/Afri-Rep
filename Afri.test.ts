@@ -50,7 +50,6 @@ describe("AfriRep", function () {
     await afriRep.connect(user1).registerUser("Chinedu", "NGA", "ipfs_hash_123");
     await afriRep.connect(user2).registerUser("Amina", "KEN", "ipfs_hash_456");
     
-    await afriRep.connect(owner).addSkill("web_dev", "Web Development", "tech");
     
     
    
