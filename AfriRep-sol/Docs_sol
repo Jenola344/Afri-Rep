@@ -1,0 +1,38 @@
+# Afri Rep Smart Contract Architecture
+
+## Overview
+The Afri Rep contract system is designed to create a pan-African reputation layer that bridges traditional trust networks with modern blockchain technology.
+
+## Core Components
+
+### 1. AfriRep.sol
+- User profile management
+- Skill verification system
+- Cross-border reputation scoring
+- Vouch-based trust mechanism
+
+### 2. AfriStablecoin.sol
+- Pan-African stablecoin (AFD)
+- Multi-currency support
+- Fiat on/off ramps
+
+### 3. AjoCircle.sol
+- Digital rotating savings (Ajo/Esusu)
+- Trust-based membership
+- Automated payout system
+
+### 4. InnerCircleDAO.sol
+- Reputation-based DAOs
+- Community governance
+- Exclusive feature access
+
+## Security Features
+- Upgradeable contracts using OpenZeppelin
+- Role-based access control
+- Reentrancy protection
+- Input validation
+
+## Network Support
+- Polygon (Primary - low fees)
+- Celo (Mobile-first)
+- Local testnets
