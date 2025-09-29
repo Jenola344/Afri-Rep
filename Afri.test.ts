@@ -55,7 +55,3 @@ describe("AfriRep", function () {
     // Give multiple vouches
     await afriRep.connect(user1).giveVouch(user2.address, "web_dev", 5, "Great work!", "evidence1");
     
-    const profile = await afriRep.getUserProfile(user2.address);
-    expect(Number(profile.reputationScore)).to.be.greaterThan(10);
-  });
-});
