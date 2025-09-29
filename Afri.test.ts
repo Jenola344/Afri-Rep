@@ -52,6 +52,6 @@ describe("AfriRep", function () {
     
     await afriRep.connect(owner).addSkill("web_dev", "Web Development", "tech");
     
-    // Give multiple vouches
+    
    
     
