@@ -48,7 +48,7 @@ describe("AfriRep", function () {
 
   it("Should calculate reputation with cross-border adjustments", async function () {
     await afriRep.connect(user1).registerUser("Chinedu", "NGA", "ipfs_hash_123");
-    await afriRep.connect(user2).registerUser("Amina", "KEN", "ipfs_hash_456");
+    
     
     
     
