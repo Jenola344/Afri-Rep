@@ -3,7 +3,7 @@
  */
 export interface User {
   id: string;
-  walletAddress: string; // Added from smart contract
+  stellarAddress: string; // Ed25519 Public Key
   phone: string;
   name: string;
   profileImage?: string; // IPFS hash
@@ -39,7 +39,7 @@ export interface Skill {
  * Reputation & Vouching
  */
 export interface Vouch {
-  id: string; // Bytes32 hash from contract
+  id: string; // Soroban standard identifier
   fromUserId: string;
   toUserId: string;
   skillId: string;
@@ -60,8 +60,8 @@ export interface InnerCircle {
   minRepScoreToJoin: number;
   minRepScoreToCreate: number;
   memberCount: number;
-  members: string[]; // Wallet addresses
-  treasuryBalance: number; // ETH balance
+  members: string[]; // Stellar Addresses
+  treasuryBalance: number; // XLM balance
   proposals: Proposal[];
 }
 
@@ -79,7 +79,7 @@ export interface Proposal {
   proposer: string;
   title: string;
   description: string;
-  amount: number; // ETH amount
+  amount: number; // XLM/AFD amount
   recipient: string;
   voteStart: Date;
   voteEnd: Date;
