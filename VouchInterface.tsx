@@ -6,19 +6,28 @@ import {
   TouchableOpacity, 
   TextInput,
   ScrollView,
-  Alert 
+  Alert,
+  Modal,
+  Platform
 } from 'react-native';
-import { theme } from '../../utils/theme';
+import { theme } from '../theme';
 
 interface VouchInterfaceProps {
-  onVouch: (skillId: string, comment: string, confidence: number) => void;
-  userSkills: string[];
+  onVouch?: (skillId: string, comment: string, confidence: number, evidenceUrl: string) => void;
+  userSkills?: string[];
+  recipientName?: string;
 }
 
-const VouchInterface: React.FC<VouchInterfaceProps> = ({ onVouch, userSkills }) => {
+const VouchInterface: React.FC<VouchInterfaceProps> = ({ 
+  onVouch, 
+  userSkills = [], 
+  recipientName = "this person"
+}) => {
   const [selectedSkill, setSelectedSkill] = useState<string>('');
   const [comment, setComment] = useState<string>('');
   const [confidence, setConfidence] = useState<number>(5);
+  const [evidenceUrl, setEvidenceUrl] = useState<string>('');
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
   const skillCategories = [
     { id: 'tech', name: 'Tech & Coding', icon: '💻' },
@@ -29,106 +38,195 @@ const VouchInterface: React.FC<VouchInterfaceProps> = ({ onVouch, userSkills }) 
     { id: 'social', name: 'Social Skills', icon: '🤝' },
   ];
 
-  const handleVouch = () => {
+  const handleVouchSubmit = () => {
     if (!selectedSkill) {
-      Alert.alert('Oya Now!', 'Select one skill you wan vouch for first.');
+      Alert.alert('Hold on!', 'Please select a skill to vouch for.');
       return;
     }
+    // Show confirmation modal before executing transaction
+    setShowConfirmModal(true);
+  };
 
-    onVouch(selectedSkill, comment, confidence);
+  const confirmVouch = () => {
+    setShowConfirmModal(false);
+    if (onVouch) {
+      onVouch(selectedSkill, comment, confidence, evidenceUrl);
+    } else {
+      Alert.alert("Success", `You successfully vouched for ${recipientName}!`);
+    }
+    // Reset form
     setSelectedSkill('');
     setComment('');
     setConfidence(5);
+    setEvidenceUrl('');
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Show Some Love 💚</Text>
-      <Text style={styles.subtitle}>Vouch for your person's skills</Text>
-      
-      {/* Skill Categories */}
-      <View style={styles.skillsContainer}>
-        {skillCategories.map((category) => (
-          <TouchableOpacity
-            key={category.id}
-            style={[
-              styles.skillButton,
-              selectedSkill === category.id && styles.skillButtonSelected
-            ]}
-            onPress={() => setSelectedSkill(category.id)}
-          >
-            <Text style={styles.skillIcon}>{category.icon}</Text>
-            <Text style={styles.skillText}>{category.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Confidence Rating */}
-      <View style={styles.confidenceContainer}>
-        <Text style={styles.confidenceLabel}>How much you trust this skill?</Text>
-        <View style={styles.starsContainer}>
-          {[1, 2, 3, 4, 5].map((star) => (
+    <View style={styles.mainContainer}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Show Some Love 💚</Text>
+          <Text style={styles.subtitle}>Vouch for {recipientName}'s skills</Text>
+        </View>
+        
+        {/* Skill Categories */}
+        <Text style={styles.sectionTitle}>1. Select a Skill Category</Text>
+        <View style={styles.skillsContainer}>
+          {skillCategories.map((category) => (
             <TouchableOpacity
-              key={star}
-              onPress={() => setConfidence(star)}
+              key={category.id}
+              activeOpacity={0.7}
+              style={[
+                styles.skillButton,
+                selectedSkill === category.id && styles.skillButtonSelected
+              ]}
+              onPress={() => setSelectedSkill(category.id)}
             >
+              <Text style={styles.skillIcon}>{category.icon}</Text>
               <Text style={[
-                styles.star,
-                star <= confidence && styles.starSelected
+                styles.skillText,
+                selectedSkill === category.id && styles.skillTextSelected
               ]}>
-                ⭐
+                {category.name}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-      </View>
 
-      {/* Comment */}
-      <TextInput
-        style={styles.commentInput}
-        placeholder="Add small comment (optional)..."
-        value={comment}
-        onChangeText={setComment}
-        multiline
-        numberOfLines={3}
-      />
+        {/* Confidence Rating */}
+        <Text style={styles.sectionTitle}>2. Confidence Level</Text>
+        <View style={styles.confidenceContainer}>
+          <Text style={styles.confidenceLabel}>How strongly do you back this?</Text>
+          <View style={styles.starsContainer}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <TouchableOpacity
+                key={star}
+                activeOpacity={0.6}
+                onPress={() => setConfidence(star)}
+              >
+                <Text style={[
+                  styles.star,
+                  star <= confidence && styles.starSelected
+                ]}>
+                  ⭐
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <Text style={styles.confidenceHint}>
+            {confidence === 1 && "Just started learning"}
+            {confidence === 2 && "Knows the basics"}
+            {confidence === 3 && "Solid, reliable performer"}
+            {confidence === 4 && "Expert level"}
+            {confidence === 5 && "Absolute Master (Legend)"}
+          </Text>
+        </View>
 
-      {/* Submit Button */}
-      <TouchableOpacity 
-        style={[
-          styles.submitButton,
-          !selectedSkill && styles.submitButtonDisabled
-        ]}
-        onPress={handleVouch}
-        disabled={!selectedSkill}
+        {/* Evidence Link */}
+        <Text style={styles.sectionTitle}>3. Evidence (Optional but boosts Rep)</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Link to portfolio, GitHub, or project..."
+          placeholderTextColor={theme.colors.textSecondary}
+          value={evidenceUrl}
+          onChangeText={setEvidenceUrl}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
+        {/* Comment */}
+        <Text style={styles.sectionTitle}>4. Leave a Comment</Text>
+        <TextInput
+          style={styles.commentInput}
+          placeholder="E.g., 'Omo, this dev sabi work! Delivered before deadline...'"
+          placeholderTextColor={theme.colors.textSecondary}
+          value={comment}
+          onChangeText={setComment}
+          multiline
+          numberOfLines={4}
+          textAlignVertical="top"
+        />
+
+        {/* Submit Button */}
+        <TouchableOpacity 
+          style={[
+            styles.submitButton,
+            !selectedSkill && styles.submitButtonDisabled
+          ]}
+          onPress={handleVouchSubmit}
+          disabled={!selectedSkill}
+        >
+          <Text style={styles.submitButtonText}>Send Vouch 🙌</Text>
+        </TouchableOpacity>
+        
+        <View style={styles.bottomSpacer} />
+      </ScrollView>
+
+      {/* Confirmation Modal */}
+      <Modal
+        visible={showConfirmModal}
+        transparent={true}
+        animationType="fade"
       >
-        <Text style={styles.submitButtonText}>Send Vouch 🙌</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirm Vouch</Text>
+            <Text style={styles.modalBody}>
+              You are staking your own reputation by vouching for {recipientName}. 
+              If this vouch is later invalidated by the community, your Rep Score will decrease.
+            </Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.modalButtonCancel]}
+                onPress={() => setShowConfirmModal(false)}
+              >
+                <Text style={styles.modalButtonCancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.modalButtonConfirm]}
+                onPress={confirmVouch}
+              >
+                <Text style={styles.modalButtonConfirmText}>I Stand By It</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
   container: {
     flex: 1,
-    padding: theme.spacing.md,
+    padding: theme.spacing.lg,
+  },
+  header: {
+    marginBottom: theme.spacing.lg,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...theme.typography.h1,
     color: theme.colors.text,
     marginBottom: theme.spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    ...theme.typography.bodyLarge,
     color: theme.colors.textSecondary,
-    marginBottom: theme.spacing.lg,
+  },
+  sectionTitle: {
+    ...theme.typography.h3,
+    color: theme.colors.text,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.md,
   },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing.lg,
   },
   skillButton: {
     width: '48%',
@@ -136,65 +234,150 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.surface,
     borderRadius: theme.borderRadius.md,
     alignItems: 'center',
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
+    ...theme.shadows.sm,
   },
   skillButtonSelected: {
     borderColor: theme.colors.primary,
-    backgroundColor: '#E8F5E8',
+    backgroundColor: `${theme.colors.primary}10`, // 10% opacity primary
   },
   skillIcon: {
-    fontSize: 24,
-    marginBottom: theme.spacing.xs,
+    fontSize: 28,
+    marginBottom: theme.spacing.sm,
   },
   skillText: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...theme.typography.bodyMedium,
+    color: theme.colors.text,
     textAlign: 'center',
   },
+  skillTextSelected: {
+    color: theme.colors.primary,
+    fontWeight: '700',
+  },
   confidenceContainer: {
-    marginBottom: theme.spacing.lg,
+    backgroundColor: theme.colors.surface,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    ...theme.shadows.sm,
   },
   confidenceLabel: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
     marginBottom: theme.spacing.sm,
   },
   starsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: theme.spacing.sm,
   },
   star: {
-    fontSize: 28,
+    fontSize: 36,
     marginHorizontal: theme.spacing.xs,
-    opacity: 0.3,
+    opacity: 0.2,
   },
   starSelected: {
     opacity: 1,
   },
-  commentInput: {
+  confidenceHint: {
+    ...theme.typography.bodyMedium,
+    color: theme.colors.primary,
+    marginTop: theme.spacing.xs,
+  },
+  input: {
+    backgroundColor: theme.colors.surface,
     borderWidth: 1,
-    borderColor: theme.colors.surface,
+    borderColor: theme.colors.border,
     borderRadius: theme.borderRadius.md,
     padding: theme.spacing.md,
-    fontSize: 16,
-    marginBottom: theme.spacing.lg,
-    textAlignVertical: 'top',
+    ...theme.typography.body,
+    color: theme.colors.text,
+    ...theme.shadows.sm,
+  },
+  commentInput: {
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.borderRadius.md,
+    padding: theme.spacing.md,
+    ...theme.typography.body,
+    color: theme.colors.text,
+    minHeight: 100,
+    ...theme.shadows.sm,
   },
   submitButton: {
     backgroundColor: theme.colors.primary,
     padding: theme.spacing.lg,
-    borderRadius: theme.borderRadius.lg,
+    borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
+    marginTop: theme.spacing.xl,
+    ...theme.shadows.md,
   },
   submitButtonDisabled: {
-    opacity: 0.5,
+    backgroundColor: theme.colors.border,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   submitButtonText: {
+    color: theme.colors.surface,
+    ...theme.typography.h3,
+  },
+  bottomSpacer: {
+    height: 60,
+  },
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: theme.colors.overlay,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing.xl,
+  },
+  modalContent: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.xl,
+    width: '100%',
+    ...theme.shadows.lg,
+  },
+  modalTitle: {
+    ...theme.typography.h2,
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
+  },
+  modalBody: {
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing.xl,
+    lineHeight: 24,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButton: {
+    flex: 1,
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.md,
+    alignItems: 'center',
+  },
+  modalButtonCancel: {
+    backgroundColor: theme.colors.surfaceSubdued,
+    marginRight: theme.spacing.sm,
+  },
+  modalButtonConfirm: {
+    backgroundColor: theme.colors.primary,
+    marginLeft: theme.spacing.sm,
+  },
+  modalButtonCancelText: {
+    ...theme.typography.bodyMedium,
+    color: theme.colors.text,
+  },
+  modalButtonConfirmText: {
+    ...theme.typography.bodyMedium,
     color: 'white',
-    fontSize: 18,
-    fontWeight: '700',
   },
 });
 
