@@ -5,250 +5,108 @@
   </p>
   <p align="center">
     <a href="https://github.com/Jenola344/Afri-Rep/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
-    <a href="https://soliditylang.org/"><img src="https://img.shields.io/badge/Solidity-^0.8.19-363636?logo=solidity" alt="Solidity"></a>
+    <a href="https://soroban.stellar.org/"><img src="https://img.shields.io/badge/Soroban-Rust-000000?logo=rust" alt="Soroban"></a>
+    <a href="https://stellar.org/"><img src="https://img.shields.io/badge/Network-Stellar-000000?logo=stellar" alt="Stellar"></a>
     <a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/React_Native-0.72-61DAFB?logo=react" alt="React Native"></a>
-    <a href="https://polygon.technology/"><img src="https://img.shields.io/badge/Network-Polygon-8247E5?logo=polygon" alt="Polygon"></a>
-    <a href="https://github.com/Jenola344/Afri-Rep/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="PRs Welcome"></a>
   </p>
 </p>
 
 ---
 
-**Afri Rep** is a pan-African platform that transforms social trust into verifiable economic power. By combining traditional community values (Ubuntu, Ajo, Stokvel) with blockchain technology, we create a portable reputation system that works across all 54 African nations — unlocking jobs, credit, and opportunities for millions.
-
-## 📐 Architecture
-
-```mermaid
-graph TB
-    subgraph Frontend["📱 Mobile App (React Native + Expo)"]
-        UI[UI Components]
-        Redux[Redux Store]
-        Nav[Navigation]
-    end
-
-    subgraph Contracts["⛓️ Smart Contracts (Polygon / Celo)"]
-        AR[AfriRep.sol<br/>Reputation & Vouching]
-        AFD[AfriStablecoin.sol<br/>AfriDollar - AFD]
-        TKN[AFD Token.sol<br/>Governance Token]
-        DAO[InnercircleDAO.sol<br/>Community Governance]
-    end
-
-    subgraph Storage["💾 Decentralized Storage"]
-        IPFS[IPFS<br/>Evidence & Images]
-    end
-
-    subgraph Integrations["🔗 External"]
-        MM[Mobile Money<br/>M-Pesa · MTN · Orange]
-        Oracle[Price Oracles]
-    end
-
-    UI --> Redux
-    Redux --> AR
-    Redux --> AFD
-    Redux --> DAO
-    AR --> IPFS
-    AFD --> Oracle
-    AFD --> MM
-    AR --> DAO
-    TKN --> DAO
-```
+## 🌟 Vision
+In many African communities, traditional systems like **Ajo**, **Stokvel**, or **Iqub** rely entirely on social trust. **Afri Rep** modernizes this by bringing portable, community-verified reputation to the **Stellar blockchain**. We transform local trust into verifiable economic power, unlocking opportunities like borderless jobs, zero-collateral micro-loans, and seamless cross-border commerce across all 54 African nations.
 
 ## 🚀 Key Features
 
-| Feature | Description | Contract |
-|---------|-------------|----------|
-| **🏆 Rep Scores** | Earn 0–1000 reputation through community vouches with cross-border multipliers | `AfriRep.sol` |
-| **🤝 Vouching System** | Vouch for skills with 1–5 confidence + IPFS evidence | `AfriRep.sol` |
-| **💰 AfriDollar (AFD)** | Pan-African stablecoin pegged 1:1 to USD with multi-currency fiat ramps | `AfriStablecoin.sol` |
-| **🏛️ Inner Circle DAOs** | Reputation-gated communities with proposal voting and treasury management | `InnercircleDAO.sol` |
-| **🌐 Cross-Border Trust** | Reputation translates across regions with regional trust bridges | `AfriRep.sol` |
-| **📊 Skill Verification** | Categorized skills (Tech, Business, Creative, Trades, Academic, Social) | `AfriRep.sol` |
+- **Portable Identity & Reputation**: Your 0-1000 Rep Score proves your reliability, built entirely on community vouches.
+- **Cross-Border Trust Bridges**: A proprietary trust algorithm that discounts cross-border vouching fraud.
+- **AfriDollar (AFD)**: A fast, low-cost pan-African stablecoin pegged to USD, powered by Stellar's high-speed consensus and integrated with local fiat on/off ramps.
+- **Inner Circle DAOs**: Reputation-gated digital community savings groups with on-chain Soroban-powered treasury management.
+- **Opportunity Marketplace**: High-paying jobs and gigs gated by minimum Rep Scores.
 
-## 📂 Project Structure
+## 🏗️ Architecture
 
+Afri Rep uses a modern tech stack centered on **Stellar Soroban** for high performance, extremely low fees, and robust security.
+
+```mermaid
+graph TD
+    %% Styling
+    classDef frontend fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:white;
+    classDef sdk fill:#10b981,stroke:#047857,stroke-width:2px,color:white;
+    classDef soroban fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:white;
+    classDef storage fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:white;
+    classDef external fill:#64748b,stroke:#334155,stroke-width:2px,color:white;
+
+    %% Components
+    A[React Native App]:::frontend
+    B[@stellar/freighter-api]:::sdk
+    C[Stellar Soroban SDK]:::sdk
+    
+    %% Soroban Contracts
+    subgraph Stellar Network [Stellar Network (Soroban Rust Contracts)]
+        D[AfriRep Core Contract<br/>Reputation & Vouches]:::soroban
+        E[InnerCircle DAO<br/>Governance]:::soroban
+        F[AFD Stablecoin<br/>Stellar Asset]:::soroban
+    end
+    
+    %% Storage & External
+    G[IPFS / Pinata<br/>Evidences & Profiles]:::storage
+    H[Mobile Money APIs<br/>Fiat Ramps]:::external
+
+    %% Connections
+    A -->|Sign Txns| B
+    B <--> C
+    C -->|Submit Txns| D
+    C -->|Deploy/Vote| E
+    C -->|Transfer XLM/AFD| F
+    
+    D -->|Check Profile/Rep| E
+    
+    A -->|Upload/Fetch| G
+    H -->|Mint/Burn triggers| F
 ```
-Afri-Rep/
-├── AfriRep-sol/                  # Core reputation contract
-│   ├── AfriRep.sol               # Main contract: profiles, vouching, reputation
-│   ├── AfriRep_Flattened.sol     # Flattened for verification
-│   └── interfaces/
-│       └── IAfriRep.sol          # Interface definition
-│
-├── AFD Token/                    # Governance token
-│   └── AFD Token.sol             # ERC-20 with liquidity lock
-│
-├── AfriRepStablecoin/            # Pan-African stablecoin
-│   ├── AfriRepStablecoin.sol     # Multi-currency fiat ramp
-│   └── Contract address          # Deployed address on Polygon
-│
-├── Innercircle DAO/              # Community governance
-│   └── InnercircleDAO.sol        # Reputation-gated DAO
-│
-├── website/                      # Landing page
-│   ├── index.html
-│   ├── styles.css
-│   └── script.js
-│
-├── App.tsx                       # React Native entry point
-├── DashboardScreen.tsx           # Main dashboard UI
-├── RepScore.tsx                  # Circular reputation display
-├── VouchInterface.tsx            # Vouching UI component
-├── theme.ts                      # Design system tokens
-├── index.ts                      # TypeScript type definitions
-├── local.ts                      # Local deployment script
-├── Afri.test.ts                  # Smart contract tests
-│
-├── CONTRIBUTING.md               # Contribution guidelines
-├── SECURITY.md                   # Security policy
-├── LICENSE                       # MIT License
-└── README.md                     # You are here
-```
 
-## ⛓️ Deployed Contracts
+## 📜 Core Soroban Contracts (Rust)
 
-| Contract | Network | Address | Status |
-|----------|---------|---------|--------|
-| AfriStablecoin (AFD) | Polygon | `0xc137c53e31519bc88e40a6dc16ac13d7f86410e5` | ✅ Verified |
-| AfriRep | Polygon | *Deployment pending* | 🟡 Staging |
-| InnercircleDAO | Polygon | *Deployment pending* | 🟡 Staging |
-| AFD Token | Polygon | *Deployment pending* | 🟡 Staging |
+1. **AfriRep Core (`afri_rep`)**: Manages user registration, profiles, and the core vouching mechanic. Calculates reputation points based on the origin of vouches.
+2. **Innercircle DAO (`innercircle_dao`)**: Allows users to pool XLM/AFD into savings groups. Only users with a specific Rep Score can join or create proposals.
+3. **AFD Token & Stablecoin (`afd_token`, `afri_stablecoin`)**: Stellar-native assets or Soroban SAC contracts for managing stable-value transfers across borders.
 
-## 🛠️ Getting Started
+## 🛠️ Local Development Setup
 
 ### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+)
+- [Rust](https://rustup.rs/) (v1.71+)
+- [Soroban CLI](https://soroban.stellar.org/docs/getting-started/setup)
 
-- **Node.js** >= 18.x
-- **npm** >= 9.x
-- **Git**
-
-### Installation
-
+### 1. Install Dependencies
 ```bash
-# Clone the repository
-git clone https://github.com/Jenola344/Afri-Rep.git
-cd Afri-Rep
-
-# Install dependencies
 npm install
 ```
 
-### Smart Contract Development
-
+### 2. Build Soroban Contracts
 ```bash
-# Compile all contracts
-npm run compile
+npm run build
+```
+*(This navigates to the `contracts/` directory and runs `soroban contract build` to compile the Rust contracts to WebAssembly `*.wasm` files).*
 
-# Run test suite
+### 3. Run Contract Tests
+```bash
 npm test
-
-# Deploy to local Hardhat network
-npx hardhat node                           # Terminal 1
-npm run deploy:local                       # Terminal 2
 ```
+*(Executes `cargo test` in the Soroban workspace).*
 
-### Mobile App (Expo)
-
+### 4. Run the Mobile App
+Currently set up to preview the UI components via Expo (simulated logic until Freighter mobile wallet integration is complete).
 ```bash
-# Start the development server
-npm start
-
-# Platform-specific
-npm run android
-npm run ios
-npm run web
+npx expo start
 ```
-
-### Landing Page
-
-```bash
-# Open in browser
-open website/index.html
-# Or serve locally
-npx serve website/
-```
-
-## 🧪 Testing
-
-```bash
-# Run all smart contract tests
-npm test
-
-# Run with gas reporting
-REPORT_GAS=true npm test
-
-# Run with coverage
-npx hardhat coverage
-```
-
-### Test Coverage
-
-| Contract | Tests | Status |
-|----------|-------|--------|
-| AfriRep.sol | User registration, vouching, cross-border reputation | ✅ |
-| AfriStablecoin.sol | Minting, burning, multi-currency | 🟡 Expanding |
-| InnercircleDAO.sol | Proposals, voting, execution | 🟡 Expanding |
-| AFD Token.sol | Supply, liquidity lock, transfers | 🟡 Expanding |
-
-## 🌍 Supported Regions
-
-### Phase 1 — Key Hubs
-🇳🇬 Nigeria · 🇰🇪 Kenya · 🇿🇦 South Africa · 🇬🇭 Ghana · 🇪🇬 Egypt
-
-### Phase 2 — Regional Expansion
-🇹🇿 Tanzania · 🇺🇬 Uganda · 🇷🇼 Rwanda · 🇪🇹 Ethiopia · 🇸🇳 Senegal · 🇨🇮 Côte d'Ivoire · 🇨🇲 Cameroon
-
-### Phase 3 — Continent Coverage
-All 54 African nations + Diaspora integration
-
-## 💱 Supported Currencies
-
-| Currency | Code | Rate (per 1 AFD) |
-|----------|------|-------------------|
-| Nigerian Naira | NGN | 800 |
-| Kenyan Shilling | KES | 150 |
-| South African Rand | ZAR | 18 |
-| Ghanaian Cedi | GHS | 12 |
-| Egyptian Pound | EGP | 30 |
-| *More coming...* | XOF, XAF, TZS, UGX | *Phase 2* |
-
-## 🔐 Security
-
-- **Upgradeable Proxies** — OpenZeppelin UUPS pattern for safe contract upgrades
-- **Role-Based Access** — Granular permissions (ADMIN, VALIDATOR, MINTER, BURNER)
-- **Reentrancy Protection** — Guards on all state-changing external functions
-- **Emergency Pause** — Circuit breaker pattern on critical operations
-- **Audit Status** — Actively seeking audit partners (see [SECURITY.md](SECURITY.md))
 
 ## 🤝 Contributing
+We welcome contributions from the community! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
-We welcome contributions from developers across Africa and beyond! See our [Contributing Guide](CONTRIBUTING.md) for:
-
-- Development setup instructions
-- Code style guidelines
-- Pull request process
-- Areas where we need help
-
-## 📊 Impact Goals
-
-| Metric | Year 1 Target |
-|--------|---------------|
-| Jobs Created | 1,000,000 opportunities |
-| Financial Inclusion | 5,000,000 unbanked users onboarded |
-| Skills Verified | 10,000,000 across the continent |
-| Cross-Border Trade | $100,000,000 facilitated |
+## 🛡️ Security
+Security is a top priority. Read our [SECURITY.md](SECURITY.md) for details on how we protect the protocol and how to report vulnerabilities.
 
 ## 📄 License
-
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
-
-## 🌟 Vision
-
-> *"To create a digitally connected Africa where every individual's skills and reputation can unlock opportunities across the continent, breaking down barriers and building a prosperous, integrated African economy."*
-
-**Built for Africa, by Africans, serving the world.** 🌍
-
----
-
-<p align="center">
-  <sub>© 2024-present Afri Rep Contributors · <a href="SECURITY.md">Security</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="LICENSE">License</a></sub>
-</p>
+This project is licensed under the [MIT License](LICENSE).
