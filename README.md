@@ -1,254 +1,254 @@
-# Afri Rep - Social Reputation Platform for Africa 🌍
+<p align="center">
+  <h1 align="center">🌍 Afri Rep</h1>
+  <p align="center">
+    <strong>Africa's Digital Reputation Layer — Where Trust Unlocks Opportunity</strong>
+  </p>
+  <p align="center">
+    <a href="https://github.com/Jenola344/Afri-Rep/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+    <a href="https://soliditylang.org/"><img src="https://img.shields.io/badge/Solidity-^0.8.19-363636?logo=solidity" alt="Solidity"></a>
+    <a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/React_Native-0.72-61DAFB?logo=react" alt="React Native"></a>
+    <a href="https://polygon.technology/"><img src="https://img.shields.io/badge/Network-Polygon-8247E5?logo=polygon" alt="Polygon"></a>
+    <a href="https://github.com/Jenola344/Afri-Rep/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  </p>
+</p>
 
-> **Building Africa's Trust Economy - Where Your Reputation Unlocks Opportunities**
+---
 
-**Afri Rep** is a continent-wide platform that transforms social trust into economic power. We're building Africa's digital reputation layer by combining traditional community values with cutting-edge technology to create opportunities for millions.
+**Afri Rep** is a pan-African platform that transforms social trust into verifiable economic power. By combining traditional community values (Ubuntu, Ajo, Stokvel) with blockchain technology, we create a portable reputation system that works across all 54 African nations — unlocking jobs, credit, and opportunities for millions.
 
-## 🌟 Why Afri Rep?
+## 📐 Architecture
 
-Africa has the world's youngest population with incredible talent, but traditional systems often fail to recognize informal skills and community trust. Afri Rep solves this by:
+```mermaid
+graph TB
+    subgraph Frontend["📱 Mobile App (React Native + Expo)"]
+        UI[UI Components]
+        Redux[Redux Store]
+        Nav[Navigation]
+    end
 
-- **Digitizing Social Capital**: Turning community trust into verifiable reputation
-- **Bridging Informal/Formal Economies**: Connecting traditional trust networks with modern opportunities
-- **Creating Pan-African Opportunities**: Breaking down barriers between African nations
-- **Empowering Youth**: 60% of Africa's population is under 25 - we're building for them
+    subgraph Contracts["⛓️ Smart Contracts (Polygon / Celo)"]
+        AR[AfriRep.sol<br/>Reputation & Vouching]
+        AFD[AfriStablecoin.sol<br/>AfriDollar - AFD]
+        TKN[AFD Token.sol<br/>Governance Token]
+        DAO[InnercircleDAO.sol<br/>Community Governance]
+    end
+
+    subgraph Storage["💾 Decentralized Storage"]
+        IPFS[IPFS<br/>Evidence & Images]
+    end
+
+    subgraph Integrations["🔗 External"]
+        MM[Mobile Money<br/>M-Pesa · MTN · Orange]
+        Oracle[Price Oracles]
+    end
+
+    UI --> Redux
+    Redux --> AR
+    Redux --> AFD
+    Redux --> DAO
+    AR --> IPFS
+    AFD --> Oracle
+    AFD --> MM
+    AR --> DAO
+    TKN --> DAO
+```
 
 ## 🚀 Key Features
 
-### 🌍 Pan-African Identity System
-- **Unified African Profile**: Single identity across 54 countries
-- **Multilingual Support**: English, French, Portuguese, Arabic + major local languages
-- **Cross-Border Reputation**: Build reputation that travels across Africa
-- **Cultural Adaptation**: Interface adapts to regional preferences and customs
+| Feature | Description | Contract |
+|---------|-------------|----------|
+| **🏆 Rep Scores** | Earn 0–1000 reputation through community vouches with cross-border multipliers | `AfriRep.sol` |
+| **🤝 Vouching System** | Vouch for skills with 1–5 confidence + IPFS evidence | `AfriRep.sol` |
+| **💰 AfriDollar (AFD)** | Pan-African stablecoin pegged 1:1 to USD with multi-currency fiat ramps | `AfriStablecoin.sol` |
+| **🏛️ Inner Circle DAOs** | Reputation-gated communities with proposal voting and treasury management | `InnercircleDAO.sol` |
+| **🌐 Cross-Border Trust** | Reputation translates across regions with regional trust bridges | `AfriRep.sol` |
+| **📊 Skill Verification** | Categorized skills (Tech, Business, Creative, Trades, Academic, Social) | `AfriRep.sol` |
 
-### 💼 Continent-Wide Opportunity Marketplace
-- **Local & Remote Work**: Opportunities from Cape to Cairo
-- **Skill-Based Matching**: AI-powered matching based on verified skills
-- **Micro-Entrepreneurship**: Support for small businesses and hustles
-- **Pan-African Projects**: Connect talent across borders for larger projects
+## 📂 Project Structure
 
-### 🤝 Community Trust Networks
-- **Ubuntu Principles**: "I am because we are" - community validation
-- **Traditional Systems**: Digital adaptation of Susu, Stokvel, Iqub, etc.
-- **Cross-Community Trust**: Build reputation across different ethnic and national groups
-- **Community Moderation**: Local communities maintain quality standards
-
-### 💳 Africa-First Financial System
-- **Multi-Currency Support**: Local currencies + pan-African digital currency
-- **Mobile Money Integration**: M-Pesa, Orange Money, MTN Mobile Money, etc.
-- **Cross-Border Payments**: Low-cost remittances within Africa
-- **Micro-Finance Access**: Reputation-based credit scoring
-
-## 🎯 Target Markets
-
-### Phase 1: Key Hubs (Months 1-6)
-- **Nigeria**: Largest economy, tech ecosystem
-- **Kenya**: Mobile money leadership, innovation hub
-- **South Africa**: Most developed financial markets
-- **Ghana**: Stable democracy, growing tech scene
-- **Egypt**: North African gateway, large population
-
-### Phase 2: Regional Expansion (Months 7-12)
-- **East Africa**: Tanzania, Uganda, Rwanda, Ethiopia
-- **West Africa**: Senegal, Côte d'Ivoire, Cameroon
-- **Southern Africa**: Angola, Zambia, Zimbabwe
-- **North Africa**: Morocco, Tunisia, Algeria
-
-### Phase 3: Continent Coverage (Year 2)
-- **All 54 African nations**
-- **Diaspora integration**
-- **Global partnerships**
-
-
-### Backend Services
-- **API Gateway**: Regional endpoints for low latency
-- **Database**: Distributed across African data centers
-- **Blockchain**: Layer 2 solutions for low-cost transactions
-- **CDN**: African-based content delivery network
-
-### Regional Infrastructure
 ```
-🇳🇬 Lagos, Nigeria - West Africa Hub
-🇰🇪 Nairobi, Kenya - East Africa Hub  
-🇿🇦 Johannesburg, South Africa - Southern Africa Hub
-🇪🇬 Cairo, Egypt - North Africa Hub
+Afri-Rep/
+├── AfriRep-sol/                  # Core reputation contract
+│   ├── AfriRep.sol               # Main contract: profiles, vouching, reputation
+│   ├── AfriRep_Flattened.sol     # Flattened for verification
+│   └── interfaces/
+│       └── IAfriRep.sol          # Interface definition
+│
+├── AFD Token/                    # Governance token
+│   └── AFD Token.sol             # ERC-20 with liquidity lock
+│
+├── AfriRepStablecoin/            # Pan-African stablecoin
+│   ├── AfriRepStablecoin.sol     # Multi-currency fiat ramp
+│   └── Contract address          # Deployed address on Polygon
+│
+├── Innercircle DAO/              # Community governance
+│   └── InnercircleDAO.sol        # Reputation-gated DAO
+│
+├── website/                      # Landing page
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
+│
+├── App.tsx                       # React Native entry point
+├── DashboardScreen.tsx           # Main dashboard UI
+├── RepScore.tsx                  # Circular reputation display
+├── VouchInterface.tsx            # Vouching UI component
+├── theme.ts                      # Design system tokens
+├── index.ts                      # TypeScript type definitions
+├── local.ts                      # Local deployment script
+├── Afri.test.ts                  # Smart contract tests
+│
+├── CONTRIBUTING.md               # Contribution guidelines
+├── SECURITY.md                   # Security policy
+├── LICENSE                       # MIT License
+└── README.md                     # You are here
 ```
 
-## 📱 Core Features Deep Dive
+## ⛓️ Deployed Contracts
 
-### 1. Pan-African Skill Verification
-```typescript
-interface AfricanSkill {
-  id: string;
-  name: string; // Localized name
-  category: SkillCategory;
-  regionalVariants: Map<string, string>; // Local names
-  verificationMethods: VerificationType[];
-  crossBorderWeight: number; // How transferable across borders
-}
+| Contract | Network | Address | Status |
+|----------|---------|---------|--------|
+| AfriStablecoin (AFD) | Polygon | `0xc137c53e31519bc88e40a6dc16ac13d7f86410e5` | ✅ Verified |
+| AfriRep | Polygon | *Deployment pending* | 🟡 Staging |
+| InnercircleDAO | Polygon | *Deployment pending* | 🟡 Staging |
+| AFD Token | Polygon | *Deployment pending* | 🟡 Staging |
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- **Node.js** >= 18.x
+- **npm** >= 9.x
+- **Git**
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Jenola344/Afri-Rep.git
+cd Afri-Rep
+
+# Install dependencies
+npm install
 ```
 
-### 2. Multicurrency Financial System
-- **Local Currencies**: NGN, KES, ZAR, GHS, EGP, etc.
-- **Pan-African Stablecoin**: AfriDollar (AFD) - 1:1 USD peg
-- **Mobile Money Integration**: Direct API connections
-- **Cash-Out Options**: Local bank transfers, mobile money, agent networks
+### Smart Contract Development
 
-### 3. Cross-Border Trust Bridges
-```typescript
-// Trust translation between different systems
-class TrustBridge {
-  convertReputation(sourceCountry: string, targetCountry: string, score: number): number;
-  calculateTrustWeight(regionalFactors: RegionalTrustFactors): number;
-  validateCrossBorderTransaction(parties: CrossBorderParty[]): boolean;
-}
+```bash
+# Compile all contracts
+npm run compile
+
+# Run test suite
+npm test
+
+# Deploy to local Hardhat network
+npx hardhat node                           # Terminal 1
+npm run deploy:local                       # Terminal 2
 ```
 
-## 🌍 Cultural Adaptation Framework
+### Mobile App (Expo)
 
-### Regional Customizations
+```bash
+# Start the development server
+npm start
 
-**West Africa Focus:**
-- Support for Yoruba, Igbo, Hausa languages
-- Integration with Ajo/Esusu traditions
-- Market woman/trader-friendly interface
-- High population density optimizations
-
-**East Africa Focus:**
-- Swahili language support
-- M-Pesa deep integration
-- Agricultural skill categories
-- Mobile data cost optimization
-
-**Southern Africa Focus:**
-- Multiple official languages
-- Mining and industrial skills
-- Formal/informal economy bridging
-- Stokvel digital transformation
-
-**North Africa Focus:**
-- Arabic and French interfaces
-- Islamic finance compliance
-- Desert region connectivity solutions
-- Mediterranean trade connections
-
-
-## 📊 Business Model
-
-### Revenue Streams
-1. **Premium Features** (Freemium model)
-2. **Transaction Fees** (1% on successful opportunities)
-3. **Enterprise Solutions** (Business verification services)
-4. **API Access** (Developers building on our platform)
-5. **Data Insights** (Anonymized market intelligence)
-
-### Impact Metrics
-- **Jobs Created**: Target 1M opportunities in Year 1
-- **Financial Inclusion**: Bring 5M unbanked Africans into digital economy
-- **Skill Development**: 10M skills verified across continent
-- **Cross-Border Trade**: Facilitate $100M in pan-African transactions
-
-## 🤝 Partnerships & Ecosystem
-
-### Strategic Partners
-- **African Union**: Continental digital identity initiatives
-- **AFREXIMBANK**: Cross-border payment infrastructure
-- **Mobile Network Operators**: Airtel, MTN, Orange, Safaricom
-- **Local Governments**: Digital transformation partnerships
-
-### Technology Partners
-- **Flutterwave**: Payment processing
-- **Paystack**: Nigerian payment solutions
-- **Jumo**: African fintech infrastructure
-- **Shecluded**: Women-focused financial services
-
-## 🌟 Success Stories (Projected)
-
-### Case Study: Fatima's Fashion Business
-*Lagos → Nairobi → Johannesburg*
-
-**Before Afri Rep:**
-- Limited to Lagos markets
-- Cash-only transactions
-- No verifiable business reputation
-
-**After Afri Rep:**
-- Customers in 3 African countries
-- Digital payments across borders
-- 4.8/5 reputation score
-- 300% revenue increase
-
-### Case Study: Samuel's Tech Skills  
-*Kampala → Remote Pan-African Work*
-
-**Before Afri Rep:**
-- Local freelance opportunities only
-- Payment delays and disputes
-- Skills not formally recognized
-
-**After Afri Rep:**
-- Projects with companies in 5 countries
-- Escrow-protected payments
-- Verified skill badges
-- Continuous learning path
-
-
-## 📈 Growth Strategy
-
-### User Acquisition Timeline
-```mermaid
-graph LR
-    A[Month 1-3] --> B[10K Users - Pilot Cities]
-    B --> C[Month 4-6: 100K Users - National Expansion]
-    C --> D[Month 7-12: 1M Users - Regional Hubs]
-    D --> E[Year 2: 10M Users - Continental Coverage]
+# Platform-specific
+npm run android
+npm run ios
+npm run web
 ```
 
-### Market Penetration Approach
-1. **University Partnerships**: Target youth in major African universities
-2. **Market Trader Onboarding**: Digitize informal sector businesses
-3. **Diaspora Engagement**: Connect Africans abroad with home opportunities
-4. **Government Partnerships**: National digital skills verification
+### Landing Page
 
-## 🔒 Security & Compliance
+```bash
+# Open in browser
+open website/index.html
+# Or serve locally
+npx serve website/
+```
 
-### Data Sovereignty
-- **African Data Centers**: Primary storage within continent
-- **GDPR + Local Laws**: Compliant with all regional regulations
-- **User Data Control**: Complete transparency and user ownership
+## 🧪 Testing
 
-### Financial Compliance
-- **Central Bank Approvals**: Licensed in each operating country
-- **Anti-Money Laundering**: Advanced AML/KYC systems
-- **Tax Compliance**: Automated tax calculation and reporting
+```bash
+# Run all smart contract tests
+npm test
 
-## 🌱 Sustainability & Impact
+# Run with gas reporting
+REPORT_GAS=true npm test
 
-### UN Sustainable Development Goals
-- **SDG 1**: No Poverty - Economic empowerment
-- **SDG 4**: Quality Education - Skills development
-- **SDG 5**: Gender Equality - Women's economic inclusion
-- **SDG 8**: Decent Work - Job creation
-- **SDG 9**: Industry Innovation - Digital infrastructure
-- **SDG 10**: Reduced Inequality - Cross-border opportunity
+# Run with coverage
+npx hardhat coverage
+```
 
-### Environmental Commitment
-- **Carbon Neutral Operations**: Offset all digital carbon footprint
-- **Green Hosting**: African data centers with renewable energy
-- **Digital Inclusion**: Reduce need for physical travel and paperwork
+### Test Coverage
 
-### For Investors
-We're building the digital infrastructure for Africa's economic integration.  
+| Contract | Tests | Status |
+|----------|-------|--------|
+| AfriRep.sol | User registration, vouching, cross-border reputation | ✅ |
+| AfriStablecoin.sol | Minting, burning, multi-currency | 🟡 Expanding |
+| InnercircleDAO.sol | Proposals, voting, execution | 🟡 Expanding |
+| AFD Token.sol | Supply, liquidity lock, transfers | 🟡 Expanding |
 
+## 🌍 Supported Regions
 
-## 🌟 Our Vision
+### Phase 1 — Key Hubs
+🇳🇬 Nigeria · 🇰🇪 Kenya · 🇿🇦 South Africa · 🇬🇭 Ghana · 🇪🇬 Egypt
 
-> **"To create a digitally connected Africa where every individual's skills and reputation can unlock opportunities across the continent, breaking down colonial-era barriers and building a prosperous, integrated African economy."**
+### Phase 2 — Regional Expansion
+🇹🇿 Tanzania · 🇺🇬 Uganda · 🇷🇼 Rwanda · 🇪🇹 Ethiopia · 🇸🇳 Senegal · 🇨🇮 Côte d'Ivoire · 🇨🇲 Cameroon
 
-*Afri Rep - Your African reputation, your continental passport to opportunity.*
+### Phase 3 — Continent Coverage
+All 54 African nations + Diaspora integration
+
+## 💱 Supported Currencies
+
+| Currency | Code | Rate (per 1 AFD) |
+|----------|------|-------------------|
+| Nigerian Naira | NGN | 800 |
+| Kenyan Shilling | KES | 150 |
+| South African Rand | ZAR | 18 |
+| Ghanaian Cedi | GHS | 12 |
+| Egyptian Pound | EGP | 30 |
+| *More coming...* | XOF, XAF, TZS, UGX | *Phase 2* |
+
+## 🔐 Security
+
+- **Upgradeable Proxies** — OpenZeppelin UUPS pattern for safe contract upgrades
+- **Role-Based Access** — Granular permissions (ADMIN, VALIDATOR, MINTER, BURNER)
+- **Reentrancy Protection** — Guards on all state-changing external functions
+- **Emergency Pause** — Circuit breaker pattern on critical operations
+- **Audit Status** — Actively seeking audit partners (see [SECURITY.md](SECURITY.md))
+
+## 🤝 Contributing
+
+We welcome contributions from developers across Africa and beyond! See our [Contributing Guide](CONTRIBUTING.md) for:
+
+- Development setup instructions
+- Code style guidelines
+- Pull request process
+- Areas where we need help
+
+## 📊 Impact Goals
+
+| Metric | Year 1 Target |
+|--------|---------------|
+| Jobs Created | 1,000,000 opportunities |
+| Financial Inclusion | 5,000,000 unbanked users onboarded |
+| Skills Verified | 10,000,000 across the continent |
+| Cross-Border Trade | $100,000,000 facilitated |
+
+## 📄 License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+## 🌟 Vision
+
+> *"To create a digitally connected Africa where every individual's skills and reputation can unlock opportunities across the continent, breaking down barriers and building a prosperous, integrated African economy."*
 
 **Built for Africa, by Africans, serving the world.** 🌍
 
 ---
 
-*© 2024 Afri Rep. Proudly African. Globally Minded.*
+<p align="center">
+  <sub>© 2024-present Afri Rep Contributors · <a href="SECURITY.md">Security</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="LICENSE">License</a></sub>
+</p>
