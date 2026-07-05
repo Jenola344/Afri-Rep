@@ -1,6 +1,13 @@
 [package]
-name = "innercircle_dao"
+name = "innercircle-dao"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
+soroban-sdk = { workspace = true }
+
+[dev_dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
