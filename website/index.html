@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afri Rep | Africa's Digital Reputation Layer</title>
+    <meta name="description" content="Transforming social trust into verifiable economic power across 54 African nations. Get your pan-African reputation score today.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Canvas for Particles -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌍</span>
+                <span class="logo-text">Afri Rep</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="https://github.com/Jenola344/Afri-Rep" target="_blank">Docs</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary">Join Waitlist</a>
+            </div>
+            
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="badge">🚀 Now in Private Beta across 5 Countries</div>
+                <h1 class="hero-title">
+                    Where <span class="gradient-text">Trust</span> Unlocks <br/>
+                    Your <span class="gradient-text">Opportunity</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Africa's first portable reputation system. We turn traditional community trust into a digital passport for jobs, credit, and cross-border commerce across 54 nations.
+                </p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-primary btn-lg">Claim Your Rep Score</a>
+                    <a href="#how-it-works" class="btn btn-outline btn-lg">See How It Works</a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="1.4">0</span><span class="stat-suffix">B+</span>
+                        <span class="stat-label">Potential Users</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="54">0</span>
+                        <span class="stat-label">Nations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="1">0</span><span class="stat-suffix">M+</span>
+                        <span class="stat-label">Verified Skills Target</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <!-- Abstract representation of the Rep Score UI -->
+                <div class="glass-card hero-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-user">
+                            <div class="avatar">C</div>
+                            <div>
+                                <div class="name">Chinedu O. 🇳🇬</div>
+                                <div class="location">Lagos, Nigeria</div>
+                            </div>
+                        </div>
+                        <div class="badge-pro">Top 5%</div>
+                    </div>
+                    
+                    <div class="mockup-score-container">
+                        <svg viewBox="0 0 100 100" class="circular-progress">
+                            <circle class="bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="50.2"></circle>
+                        </svg>
+                        <div class="score-text">
+                            <div class="number">780</div>
+                            <div class="level">INFLUENCER</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mockup-skills">
+                        <div class="skill-tag"><i class="fas fa-code"></i> React Native (12)</div>
+                        <div class="skill-tag"><i class="fas fa-paint-brush"></i> UI/UX (8)</div>
+                        <div class="skill-tag"><i class="fas fa-handshake"></i> Management (5)</div>
+                    </div>
+                </div>
+                
+                <!-- Floating elements -->
+                <div class="glass-card floating-card vouch-card">
+                    <div class="icon">💚</div>
+                    <div>
+                        <div class="title">Amina just vouched for you!</div>
+                        <div class="sub">+15 Rep Score</div>
+                    </div>
+                </div>
+                
+                <div class="glass-card floating-card payment-card">
+                    <div class="icon">💰</div>
+                    <div>
+                        <div class="title">Payment Received</div>
+                        <div class="sub">500 AFD (~$500)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Built for the African Context</h2>
+                <p>Traditional trust systems meet modern blockchain technology.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><i class="fas fa-id-card"></i></div>
+                    <h3>Portable Reputation</h3>
+                    <p>Your 0-1000 Rep Score travels with you. Built through community vouches, it proves your reliability to employers and lenders across borders.</p>
+                </div>
+                
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><i class="fas fa-globe-africa"></i></div>
+                    <h3>Cross-Border Trust Bridges</h3>
+                    <p>Our algorithm translates local trust into continental credibility. A vouch from Kenya helps you land a gig in Nigeria.</p>
+                </div>
+                
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><i class="fas fa-coins"></i></div>
+                    <h3>AfriDollar (AFD)</h3>
+                    <p>A pan-African stablecoin pegged 1:1 to USD. On-ramp via M-Pesa, MTN, or local bank transfers in 14+ African currencies.</p>
+                </div>
+                
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>Inner Circle DAOs</h3>
+                    <p>Digital adaptation of Ajo/Stokvel/Iqub. Form reputation-gated savings groups with transparent, on-chain treasury management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Afri Rep Works</h2>
+                <p>Four simple steps to unlock your potential.</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Claim Your Identity</h3>
+                        <p>Sign up in under 60 seconds. Verify your phone number and connect your preferred mobile money or local bank account.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>Get Vouched</h3>
+                        <p>Ask former colleagues, clients, or community members to vouch for your skills. Each valid vouch increases your Rep Score.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Access Opportunities</h3>
+                        <p>Unlock high-paying gigs, remote work, and micro-loans that require specific minimum Rep Scores.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Get Paid Borderlessly</h3>
+                        <p>Receive payments in AfriDollar (AFD) and cash out instantly to your local currency with near-zero fees.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="cta-title">Ready to build your African legacy?</h2>
+            <p class="cta-text">Join thousands of professionals already leveraging their reputation.</p>
+            <form class="waitlist-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn btn-primary">Join the Waitlist</button>
+            </form>
+            <p class="form-hint">No spam. Just updates on our public launch.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">🌍</span>
+                        <span class="logo-text">Afri Rep</span>
+                    </div>
+                    <p>Building Africa's Trust Economy.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://github.com/Jenola344/Afri-Rep"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Reputation</a></li>
+                        <li><a href="#">AfriDollar (AFD)</a></li>
+                        <li><a href="#">Inner Circles</a></li>
+                        <li><a href="#">Opportunities</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Developers</h4>
+                    <ul>
+                        <li><a href="https://github.com/Jenola344/Afri-Rep">GitHub</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Smart Contracts</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Afri Rep. Built for Africa, by Africans, serving the world.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
